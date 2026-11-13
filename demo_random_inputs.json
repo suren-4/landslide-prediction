@@ -1,0 +1,502 @@
+[
+  {
+    "test_id": "TEST-001",
+    "rainfall": 113.6,
+    "soil_moisture": 0.581,
+    "slope_angle": 3.4,
+    "vibration": 0.0985,
+    "prediction": 0,
+    "probability_percent": 0.0,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-002",
+    "rainfall": 150.8,
+    "soil_moisture": 0.826,
+    "slope_angle": 16.7,
+    "vibration": 0.492,
+    "prediction": 1,
+    "probability_percent": 93.2,
+    "risk_level": "CRITICAL"
+  },
+  {
+    "test_id": "TEST-003",
+    "rainfall": 158.7,
+    "soil_moisture": 0.227,
+    "slope_angle": 28.6,
+    "vibration": 0.1969,
+    "prediction": 0,
+    "probability_percent": 5.7,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-004",
+    "rainfall": 40.0,
+    "soil_moisture": 0.781,
+    "slope_angle": 48.3,
+    "vibration": 0.1316,
+    "prediction": 1,
+    "probability_percent": 83.9,
+    "risk_level": "CRITICAL"
+  },
+  {
+    "test_id": "TEST-005",
+    "rainfall": 18.4,
+    "soil_moisture": 0.611,
+    "slope_angle": 37.0,
+    "vibration": 0.1556,
+    "prediction": 0,
+    "probability_percent": 4.3,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-006",
+    "rainfall": 150.8,
+    "soil_moisture": 0.532,
+    "slope_angle": 4.3,
+    "vibration": 0.0801,
+    "prediction": 0,
+    "probability_percent": 0.0,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-007",
+    "rainfall": 41.1,
+    "soil_moisture": 0.975,
+    "slope_angle": 27.0,
+    "vibration": 0.3204,
+    "prediction": 1,
+    "probability_percent": 62.7,
+    "risk_level": "WARNING"
+  },
+  {
+    "test_id": "TEST-008",
+    "rainfall": 161.7,
+    "soil_moisture": 0.554,
+    "slope_angle": 45.8,
+    "vibration": 0.4453,
+    "prediction": 1,
+    "probability_percent": 99.5,
+    "risk_level": "CRITICAL"
+  },
+  {
+    "test_id": "TEST-009",
+    "rainfall": 88.7,
+    "soil_moisture": 0.382,
+    "slope_angle": 47.7,
+    "vibration": 0.1923,
+    "prediction": 0,
+    "probability_percent": 37.2,
+    "risk_level": "GUARD"
+  },
+  {
+    "test_id": "TEST-010",
+    "rainfall": 190.3,
+    "soil_moisture": 0.822,
+    "slope_angle": 27.8,
+    "vibration": 0.5077,
+    "prediction": 1,
+    "probability_percent": 99.3,
+    "risk_level": "CRITICAL"
+  },
+  {
+    "test_id": "TEST-011",
+    "rainfall": 21.4,
+    "soil_moisture": 0.146,
+    "slope_angle": 35.7,
+    "vibration": 0.4903,
+    "prediction": 0,
+    "probability_percent": 2.5,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-012",
+    "rainfall": 35.1,
+    "soil_moisture": 0.306,
+    "slope_angle": 34.3,
+    "vibration": 0.0945,
+    "prediction": 0,
+    "probability_percent": 0.0,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-013",
+    "rainfall": 154.3,
+    "soil_moisture": 0.504,
+    "slope_angle": 34.7,
+    "vibration": 0.2892,
+    "prediction": 1,
+    "probability_percent": 68.0,
+    "risk_level": "WARNING"
+  },
+  {
+    "test_id": "TEST-014",
+    "rainfall": 9.5,
+    "soil_moisture": 0.258,
+    "slope_angle": 29.6,
+    "vibration": 0.0706,
+    "prediction": 0,
+    "probability_percent": 0.4,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-015",
+    "rainfall": 110.0,
+    "soil_moisture": 0.178,
+    "slope_angle": 4.5,
+    "vibration": 0.1022,
+    "prediction": 0,
+    "probability_percent": 0.5,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-016",
+    "rainfall": 97.3,
+    "soil_moisture": 0.866,
+    "slope_angle": 47.6,
+    "vibration": 0.2656,
+    "prediction": 1,
+    "probability_percent": 98.8,
+    "risk_level": "CRITICAL"
+  },
+  {
+    "test_id": "TEST-017",
+    "rainfall": 101.4,
+    "soil_moisture": 0.643,
+    "slope_angle": 17.6,
+    "vibration": 0.0691,
+    "prediction": 0,
+    "probability_percent": 1.8,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-018",
+    "rainfall": 11.2,
+    "soil_moisture": 0.643,
+    "slope_angle": 41.0,
+    "vibration": 0.3703,
+    "prediction": 0,
+    "probability_percent": 41.9,
+    "risk_level": "GUARD"
+  },
+  {
+    "test_id": "TEST-019",
+    "rainfall": 143.4,
+    "soil_moisture": 0.445,
+    "slope_angle": 33.5,
+    "vibration": 0.119,
+    "prediction": 0,
+    "probability_percent": 8.4,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-020",
+    "rainfall": 145.2,
+    "soil_moisture": 0.543,
+    "slope_angle": 37.9,
+    "vibration": 0.0561,
+    "prediction": 1,
+    "probability_percent": 52.1,
+    "risk_level": "GUARD"
+  },
+  {
+    "test_id": "TEST-021",
+    "rainfall": 172.6,
+    "soil_moisture": 0.689,
+    "slope_angle": 35.4,
+    "vibration": 0.2758,
+    "prediction": 1,
+    "probability_percent": 97.8,
+    "risk_level": "CRITICAL"
+  },
+  {
+    "test_id": "TEST-022",
+    "rainfall": 214.6,
+    "soil_moisture": 0.239,
+    "slope_angle": 16.4,
+    "vibration": 0.1291,
+    "prediction": 0,
+    "probability_percent": 21.3,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-023",
+    "rainfall": 10.6,
+    "soil_moisture": 0.891,
+    "slope_angle": 5.8,
+    "vibration": 0.3359,
+    "prediction": 0,
+    "probability_percent": 0.5,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-024",
+    "rainfall": 138.8,
+    "soil_moisture": 0.401,
+    "slope_angle": 2.6,
+    "vibration": 0.464,
+    "prediction": 0,
+    "probability_percent": 1.7,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-025",
+    "rainfall": 84.7,
+    "soil_moisture": 0.563,
+    "slope_angle": 36.1,
+    "vibration": 0.373,
+    "prediction": 0,
+    "probability_percent": 47.9,
+    "risk_level": "GUARD"
+  },
+  {
+    "test_id": "TEST-026",
+    "rainfall": 152.8,
+    "soil_moisture": 0.368,
+    "slope_angle": 21.8,
+    "vibration": 0.1357,
+    "prediction": 0,
+    "probability_percent": 1.0,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-027",
+    "rainfall": 213.1,
+    "soil_moisture": 0.318,
+    "slope_angle": 9.1,
+    "vibration": 0.0755,
+    "prediction": 0,
+    "probability_percent": 17.4,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-028",
+    "rainfall": 207.7,
+    "soil_moisture": 0.377,
+    "slope_angle": 37.2,
+    "vibration": 0.5031,
+    "prediction": 1,
+    "probability_percent": 99.5,
+    "risk_level": "CRITICAL"
+  },
+  {
+    "test_id": "TEST-029",
+    "rainfall": 154.2,
+    "soil_moisture": 0.411,
+    "slope_angle": 47.2,
+    "vibration": 0.4064,
+    "prediction": 1,
+    "probability_percent": 99.7,
+    "risk_level": "CRITICAL"
+  },
+  {
+    "test_id": "TEST-030",
+    "rainfall": 52.5,
+    "soil_moisture": 0.816,
+    "slope_angle": 38.5,
+    "vibration": 0.2201,
+    "prediction": 1,
+    "probability_percent": 79.2,
+    "risk_level": "WARNING"
+  },
+  {
+    "test_id": "TEST-031",
+    "rainfall": 44.0,
+    "soil_moisture": 0.713,
+    "slope_angle": 42.6,
+    "vibration": 0.2059,
+    "prediction": 1,
+    "probability_percent": 55.2,
+    "risk_level": "WARNING"
+  },
+  {
+    "test_id": "TEST-032",
+    "rainfall": 96.1,
+    "soil_moisture": 0.382,
+    "slope_angle": 13.5,
+    "vibration": 0.3611,
+    "prediction": 0,
+    "probability_percent": 1.0,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-033",
+    "rainfall": 85.9,
+    "soil_moisture": 0.662,
+    "slope_angle": 19.4,
+    "vibration": 0.1993,
+    "prediction": 0,
+    "probability_percent": 1.6,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-034",
+    "rainfall": 43.0,
+    "soil_moisture": 0.968,
+    "slope_angle": 3.1,
+    "vibration": 0.3037,
+    "prediction": 0,
+    "probability_percent": 3.8,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-035",
+    "rainfall": 123.4,
+    "soil_moisture": 0.12,
+    "slope_angle": 44.8,
+    "vibration": 0.0653,
+    "prediction": 0,
+    "probability_percent": 14.7,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-036",
+    "rainfall": 137.7,
+    "soil_moisture": 0.144,
+    "slope_angle": 36.1,
+    "vibration": 0.4853,
+    "prediction": 1,
+    "probability_percent": 81.4,
+    "risk_level": "CRITICAL"
+  },
+  {
+    "test_id": "TEST-037",
+    "rainfall": 153.0,
+    "soil_moisture": 0.298,
+    "slope_angle": 45.7,
+    "vibration": 0.3209,
+    "prediction": 1,
+    "probability_percent": 97.0,
+    "risk_level": "CRITICAL"
+  },
+  {
+    "test_id": "TEST-038",
+    "rainfall": 79.1,
+    "soil_moisture": 0.843,
+    "slope_angle": 13.8,
+    "vibration": 0.4303,
+    "prediction": 1,
+    "probability_percent": 52.5,
+    "risk_level": "GUARD"
+  },
+  {
+    "test_id": "TEST-039",
+    "rainfall": 10.0,
+    "soil_moisture": 0.873,
+    "slope_angle": 15.3,
+    "vibration": 0.3216,
+    "prediction": 0,
+    "probability_percent": 4.1,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-040",
+    "rainfall": 200.3,
+    "soil_moisture": 0.973,
+    "slope_angle": 5.0,
+    "vibration": 0.511,
+    "prediction": 0,
+    "probability_percent": 0.5,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-041",
+    "rainfall": 113.8,
+    "soil_moisture": 0.929,
+    "slope_angle": 28.3,
+    "vibration": 0.149,
+    "prediction": 1,
+    "probability_percent": 82.3,
+    "risk_level": "CRITICAL"
+  },
+  {
+    "test_id": "TEST-042",
+    "rainfall": 142.4,
+    "soil_moisture": 0.481,
+    "slope_angle": 32.3,
+    "vibration": 0.2836,
+    "prediction": 0,
+    "probability_percent": 43.8,
+    "risk_level": "GUARD"
+  },
+  {
+    "test_id": "TEST-043",
+    "rainfall": 48.9,
+    "soil_moisture": 0.733,
+    "slope_angle": 40.4,
+    "vibration": 0.4828,
+    "prediction": 1,
+    "probability_percent": 93.1,
+    "risk_level": "CRITICAL"
+  },
+  {
+    "test_id": "TEST-044",
+    "rainfall": 66.6,
+    "soil_moisture": 0.617,
+    "slope_angle": 6.1,
+    "vibration": 0.179,
+    "prediction": 0,
+    "probability_percent": 1.9,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-045",
+    "rainfall": 179.4,
+    "soil_moisture": 0.861,
+    "slope_angle": 44.8,
+    "vibration": 0.381,
+    "prediction": 1,
+    "probability_percent": 100.0,
+    "risk_level": "CRITICAL"
+  },
+  {
+    "test_id": "TEST-046",
+    "rainfall": 201.5,
+    "soil_moisture": 0.429,
+    "slope_angle": 9.8,
+    "vibration": 0.1053,
+    "prediction": 0,
+    "probability_percent": 5.0,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-047",
+    "rainfall": 49.2,
+    "soil_moisture": 0.051,
+    "slope_angle": 12.9,
+    "vibration": 0.5124,
+    "prediction": 0,
+    "probability_percent": 0.0,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-048",
+    "rainfall": 162.5,
+    "soil_moisture": 0.903,
+    "slope_angle": 31.0,
+    "vibration": 0.2527,
+    "prediction": 1,
+    "probability_percent": 96.5,
+    "risk_level": "CRITICAL"
+  },
+  {
+    "test_id": "TEST-049",
+    "rainfall": 69.0,
+    "soil_moisture": 0.404,
+    "slope_angle": 32.9,
+    "vibration": 0.4446,
+    "prediction": 0,
+    "probability_percent": 17.1,
+    "risk_level": "LOW"
+  },
+  {
+    "test_id": "TEST-050",
+    "rainfall": 28.7,
+    "soil_moisture": 0.729,
+    "slope_angle": 2.3,
+    "vibration": 0.3596,
+    "prediction": 0,
+    "probability_percent": 0.0,
+    "risk_level": "LOW"
+  }
+]

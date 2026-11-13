@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landslide Risk Monitoring &amp; Early Warning System</title>
+
+    <!-- Tailwind CSS (Clean & Modern Enterprise Styling) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            850: '#0f172a',
+                            900: '#0b1120',
+                            950: '#070b14',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Fonts: Plus Jakarta Sans & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #070b14;
+            color: #f1f5f9;
+        }
+
+        .bg-subtle-grid {
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.05) 0%, transparent 50%),
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 100% 100%, 32px 32px, 32px 32px;
+        }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            transition: all 0.25s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.12); border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.25); }
+    </style>
+</head>
+<body class="bg-subtle-grid min-h-screen text-slate-100 flex flex-col antialiased selection:bg-sky-500 selection:text-white">
+
+    <!-- ================= CLEAN EXECUTIVE HEADER ================= -->
+    <header class="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl px-6 lg:px-10 py-4 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            
+            <!-- Branding -->
+            <div class="flex items-center gap-3.5">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/20 ring-1 ring-white/10">
+                    <i data-lucide="mountain" class="w-5 h-5 text-white"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="font-bold text-base tracking-tight text-white">Landslide Risk Monitoring System</h1>
+                        <span class="text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/20 font-mono">Real-Time</span>
+                    </div>
+                    <p class="text-xs text-slate-400">Autonomous Geotechnical Stability &amp; Telemetry Analytics</p>
+                </div>
+            </div>
+
+            <!-- Header Status -->
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs font-mono text-slate-300">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                    <span>Live Telemetry Active</span>
+                </div>
+                <div class="text-right hidden sm:block">
+                    <div class="text-[10px] text-slate-500 font-mono uppercase">Last Sync</div>
+                    <div class="text-xs font-mono text-slate-300" id="clockLocal">--:--:--</div>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- ================= MAIN DASHBOARD CONTENT ================= -->
+    <main class="max-w-7xl mx-auto w-full px-6 lg:px-10 py-6 flex-1 flex flex-col gap-6">
+
+        <!-- ================= 4 PRIMARY SENSOR TELEMETRY CARDS ================= -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            <!-- Sensor 1: Precipitation -->
+            <div class="glass-card rounded-2xl p-5 flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-medium text-slate-400 flex items-center gap-1.5">
+                        <i data-lucide="cloud-rain" class="w-4 h-4 text-sky-400"></i>
+                        Precipitation
+                    </span>
+                    <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20" id="badgeRainLevel">Moderate</span>
+                </div>
+                <div>
+                    <div class="flex items-baseline gap-1.5">
+                        <span class="text-3xl font-extrabold tracking-tight text-white font-mono" id="valRain">25.0</span>
+                        <span class="text-xs font-medium text-slate-400">mm/hr</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden mt-3">
+                        <div id="barRain" class="bg-sky-500 h-full rounded-full transition-all duration-500" style="width: 15%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sensor 2: Soil Moisture -->
+            <div class="glass-card rounded-2xl p-5 flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-medium text-slate-400 flex items-center gap-1.5">
+                        <i data-lucide="droplets" class="w-4 h-4 text-cyan-400"></i>
+                        Pore Saturation
+                    </span>
+                    <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20" id="badgeSoilLevel">Moist</span>
+                </div>
+                <div>
+                    <div class="flex items-baseline gap-1.5">
+                        <span class="text-3xl font-extrabold tracking-tight text-white font-mono" id="valSoil">28.0</span>
+                        <span class="text-xs font-medium text-slate-400">%</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden mt-3">
+                        <div id="barSoil" class="bg-cyan-500 h-full rounded-full transition-all duration-500" style="width: 28%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sensor 3: Slope Angle -->
+            <div class="glass-card rounded-2xl p-5 flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-medium text-slate-400 flex items-center gap-1.5">
+                        <i data-lucide="trending-up" class="w-4 h-4 text-amber-400"></i>
+                        Slope Gradient
+                    </span>
+                    <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20" id="badgeSlopeLevel">Moderate</span>
+                </div>
+                <div>
+                    <div class="flex items-baseline gap-1.5">
+                        <span class="text-3xl font-extrabold tracking-tight text-white font-mono" id="valSlope">18.0</span>
+                        <span class="text-xs font-medium text-slate-400">Degrees (°)</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden mt-3">
+                        <div id="barSlope" class="bg-amber-500 h-full rounded-full transition-all duration-500" style="width: 36%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sensor 4: Seismic Ground Vibration -->
+            <div class="glass-card rounded-2xl p-5 flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-medium text-slate-400 flex items-center gap-1.5">
+                        <i data-lucide="waves" class="w-4 h-4 text-rose-400"></i>
+                        Ground Vibration
+                    </span>
+                    <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 border border-rose-500/20" id="badgeVibLevel">Nominal</span>
+                </div>
+                <div>
+                    <div class="flex items-baseline gap-1.5">
+                        <span class="text-3xl font-extrabold tracking-tight text-white font-mono" id="valVib">0.030</span>
+                        <span class="text-xs font-medium text-slate-400">g (RMS)</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden mt-3">
+                        <div id="barVib" class="bg-rose-500 h-full rounded-full transition-all duration-500" style="width: 8%;"></div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ================= MAIN MIDDLE ROW: HAZARD ASSESSMENT & MOUNTAIN SIMULATION ================= -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- COLUMN 1: AI HAZARD INFERENCE (5 Cols) -->
+            <div class="lg:col-span-5 glass-card rounded-3xl p-6 flex flex-col justify-between">
+                <div>
+                    <!-- Header -->
+                    <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+                        <div>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Model Inference</span>
+                            <h2 class="text-base font-bold text-white tracking-tight">Landslide Risk Assessment</h2>
+                        </div>
+                        <span class="text-xs font-mono text-slate-400" id="badgePacketNum">Packet #1</span>
+                    </div>
+
+                    <!-- Circular Progress Ring & Value -->
+                    <div class="flex items-center justify-center my-5">
+                        <div class="relative w-48 h-48 flex items-center justify-center">
+                            <svg class="w-full h-full transform -rotate-90" viewBox="0 0 160 160">
+                                <circle cx="80" cy="80" r="70" class="stroke-slate-800 fill-none" stroke-width="12"></circle>
+                                <circle id="circleProb" cx="80" cy="80" r="70" class="fill-none stroke-emerald-500 transition-all duration-700 ease-out" stroke-width="12" stroke-linecap="round" stroke-dasharray="439.8" stroke-dashoffset="439.8"></circle>
+                            </svg>
+                            <div class="absolute text-center flex flex-col items-center">
+                                <span class="text-4xl font-extrabold tracking-tight text-white font-mono" id="probText">0.0%</span>
+                                <span class="text-xs uppercase tracking-wider font-semibold text-slate-400 mt-1">Failure Probability</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Threat Status Banner -->
+                    <div id="riskBanner" class="p-3.5 rounded-xl border flex items-center justify-between transition-all duration-300 bg-emerald-500/10 border-emerald-500/20 text-emerald-400">
+                        <div class="flex items-center gap-2.5">
+                            <div id="riskIconContainer" class="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                                <i data-lucide="shield-check" class="w-5 h-5 text-emerald-400" id="riskIcon"></i>
+                            </div>
+                            <div>
+                                <div class="text-[10px] uppercase font-mono tracking-wider text-slate-400">Threat Level</div>
+                                <div class="font-bold text-sm tracking-wide text-white" id="riskLabel">LOW RISK // STABLE</div>
+                            </div>
+                        </div>
+                        <div class="text-right font-mono">
+                            <span class="text-xs text-slate-400">Class: </span>
+                            <span class="font-bold text-sm text-white" id="predClass">0</span>
+                        </div>
+                    </div>
+
+                    <!-- Key Geotechnical Metrics -->
+                    <div class="grid grid-cols-2 gap-3 my-4">
+                        <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-3 text-center">
+                            <div class="text-[10px] uppercase text-slate-400 font-medium">Factor of Safety</div>
+                            <div class="text-xl font-bold font-mono text-white mt-0.5" id="valFS">2.45</div>
+                            <div class="text-[9px] text-slate-500 mt-0.5">Threshold: 1.00</div>
+                        </div>
+                        <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-3 text-center">
+                            <div class="text-[10px] uppercase text-slate-400 font-medium">Primary Driver</div>
+                            <div class="text-xs font-bold text-sky-400 mt-1.5 truncate" id="valDominant">Precipitation</div>
+                            <div class="text-[9px] text-slate-500 mt-0.5">Key Trigger</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advisory -->
+                <div class="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800/90 text-xs text-slate-300 leading-relaxed" id="recText">
+                    Nominal terrain stability. Hydrological conditions stable.
+                </div>
+            </div>
+
+            <!-- COLUMN 2: MOUNTAIN TERRAIN CROSS-SECTION SIMULATOR (7 Cols) -->
+            <div class="lg:col-span-7 glass-card rounded-3xl p-6 flex flex-col justify-between">
+                <div>
+                    <!-- Visualizer Header -->
+                    <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+                        <div>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Physical Cross-Section</span>
+                            <h2 class="text-base font-bold text-white tracking-tight">Geotechnical Slope Stability Visualizer</h2>
+                        </div>
+                        <div class="flex items-center gap-3 text-xs font-mono text-slate-400">
+                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-sky-500 inline-block"></span> Water Table</span>
+                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span> Shear Plane</span>
+                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span> Critical Failure</span>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Mountain Slope Canvas -->
+                    <div class="relative w-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 aspect-[16/9] max-h-[340px]">
+                        <canvas id="slopeCanvas" class="w-full h-full block"></canvas>
+                        
+                        <!-- Real-time badges on canvas -->
+                        <div class="absolute bottom-3 left-3 bg-slate-900/85 backdrop-blur px-3 py-1.5 rounded-lg text-[11px] font-mono text-slate-300 border border-slate-700/60">
+                            Slope Angle: <span id="canvasSlopeAngle" class="text-amber-400 font-bold">18.0°</span>
+                        </div>
+                        <div class="absolute bottom-3 right-3 bg-slate-900/85 backdrop-blur px-3 py-1.5 rounded-lg text-[11px] font-mono text-slate-300 border border-slate-700/60">
+                            Seismic Dynamic: <span id="canvasVibVal" class="text-rose-400 font-bold">0.030g</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-[11px] text-slate-400 font-mono mt-3 flex items-center justify-between">
+                    <span>Rendering Mohr-Coulomb slip surface &amp; groundwater infiltration</span>
+                    <span class="text-slate-500">Live Model Sync</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ================= LOWER SECTION: TIMELINE & THREAT DRIVERS ================= -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- Chart Timeline (8 Cols) -->
+            <div class="lg:col-span-8 glass-card rounded-3xl p-5">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="line-chart" class="w-4 h-4 text-sky-400"></i>
+                        <h3 class="text-xs font-bold text-white uppercase tracking-wider">Multi-Stream Telemetry Timeline</h3>
+                    </div>
+                    <span class="text-xs text-slate-400 font-mono">Rolling History</span>
+                </div>
+                <div class="h-60 w-full">
+                    <canvas id="timelineChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Threat Factors (4 Cols) -->
+            <div class="lg:col-span-4 glass-card rounded-3xl p-5 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="bar-chart-2" class="w-4 h-4 text-sky-400"></i>
+                            <h3 class="text-xs font-bold text-white uppercase tracking-wider">Hazard Factor Breakdown</h3>
+                        </div>
+                        <span class="text-[10px] font-mono text-slate-500">SHAP Weights</span>
+                    </div>
+
+                    <div class="space-y-3.5 my-1">
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-slate-300">Precipitation Surge</span>
+                                <span class="font-mono text-sky-400" id="factorRainVal">15%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                <div id="factorRainBar" class="bg-sky-500 h-full rounded-full transition-all duration-300" style="width: 15%;"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-slate-300">Pore Saturation</span>
+                                <span class="font-mono text-cyan-400" id="factorSoilVal">28%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                <div id="factorSoilBar" class="bg-cyan-500 h-full rounded-full transition-all duration-300" style="width: 28%;"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-slate-300">Slope Shear Stress</span>
+                                <span class="font-mono text-amber-400" id="factorSlopeVal">36%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                <div id="factorSlopeBar" class="bg-amber-500 h-full rounded-full transition-all duration-300" style="width: 36%;"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-slate-300">Seismic Dynamic Load</span>
+                                <span class="font-mono text-rose-400" id="factorVibVal">8%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                <div id="factorVibBar" class="bg-rose-500 h-full rounded-full transition-all duration-300" style="width: 8%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-3 border-t border-slate-800 text-[11px] text-slate-400 flex items-center justify-between font-mono">
+                    <span>Inferences Processed:</span>
+                    <span id="totalPacketsCount" class="text-white font-bold">1</span>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="border-t border-slate-800/80 bg-slate-950/80 py-4 px-6 text-center text-xs text-slate-500 font-mono">
+        Landslide Risk Monitoring System &bull; Active on http://127.0.0.1:5000
+    </footer>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+        lucide.createIcons();
+
+        // System State
+        const state = {
+            rainfall: 25.0,
+            soil_moisture: 28.0,
+            slope_angle: 18.0,
+            vibration: 0.030,
+            probability: 0.0,
+            packetCount: 0
+        };
+
+        const API_BASE = window.location.origin.includes('5000') 
+            ? window.location.origin 
+            : 'http://127.0.0.1:5000';
+
+        const perimeterCircumference = 2 * Math.PI * 70; // ~439.8
+
+        function renderDashboard(data) {
+            state.rainfall = data.rainfall;
+            state.soil_moisture = typeof data.soil_moisture === 'number' ? data.soil_moisture : state.soil_moisture;
+            state.slope_angle = data.slope_angle;
+            state.vibration = data.vibration;
+            state.probability = data.probability_percent;
+            state.packetCount = data.packet_id || (state.packetCount + 1);
+
+            // Numerical Values
+            document.getElementById('valRain').textContent = data.rainfall.toFixed(1);
+            document.getElementById('valSoil').textContent = state.soil_moisture.toFixed(1);
+            document.getElementById('valSlope').textContent = data.slope_angle.toFixed(1);
+            document.getElementById('valVib').textContent = data.vibration.toFixed(3);
+
+            // Progress Bars
+            document.getElementById('barRain').style.width = Math.min(100, (data.rainfall / 220) * 100) + '%';
+            document.getElementById('barSoil').style.width = Math.min(100, state.soil_moisture) + '%';
+            document.getElementById('barSlope').style.width = Math.min(100, (data.slope_angle / 50) * 100) + '%';
+            document.getElementById('barVib').style.width = Math.min(100, (data.vibration / 0.60) * 100) + '%';
+
+            // Status Badges
+            document.getElementById('badgeRainLevel').textContent = data.rainfall > 120 ? 'Torrential' : (data.rainfall > 60 ? 'Heavy' : 'Moderate');
+            document.getElementById('badgeSoilLevel').textContent = state.soil_moisture > 75 ? 'Liquid Limit' : (state.soil_moisture > 50 ? 'Saturated' : 'Moist');
+            document.getElementById('badgeSlopeLevel').textContent = data.slope_angle > 35 ? 'Critical' : (data.slope_angle > 25 ? 'Steep' : 'Moderate');
+            document.getElementById('badgeVibLevel').textContent = data.vibration > 0.25 ? 'Heavy Tremor' : (data.vibration > 0.08 ? 'Minor Tremor' : 'Nominal');
+
+            // Probability SVG Ring
+            const offset = perimeterCircumference - (data.probability_percent / 100) * perimeterCircumference;
+            const circle = document.getElementById('circleProb');
+            circle.style.strokeDashoffset = offset;
+
+            document.getElementById('probText').textContent = data.probability_percent.toFixed(1) + '%';
+            document.getElementById('predClass').textContent = data.prediction;
+            document.getElementById('valFS').textContent = data.factor_of_safety ? data.factor_of_safety.toFixed(2) : '1.50';
+            document.getElementById('valDominant').textContent = data.dominant_threat || 'Precipitation';
+            document.getElementById('recText').textContent = data.recommendation;
+            document.getElementById('badgePacketNum').textContent = `Packet #${state.packetCount}`;
+            document.getElementById('totalPacketsCount').textContent = state.packetCount;
+
+            // Threat Banner Coloring
+            const banner = document.getElementById('riskBanner');
+            const iconContainer = document.getElementById('riskIconContainer');
+            const icon = document.getElementById('riskIcon');
+            const label = document.getElementById('riskLabel');
+
+            if (data.probability_percent < 25) {
+                circle.style.stroke = '#10b981';
+                banner.className = 'p-3.5 rounded-xl border flex items-center justify-between transition-all duration-300 bg-emerald-500/10 border-emerald-500/20 text-emerald-400';
+                iconContainer.className = 'w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center';
+                label.textContent = 'LOW RISK // STABLE';
+                icon.setAttribute('data-lucide', 'shield-check');
+            } else if (data.probability_percent < 55) {
+                circle.style.stroke = '#f59e0b';
+                banner.className = 'p-3.5 rounded-xl border flex items-center justify-between transition-all duration-300 bg-amber-500/10 border-amber-500/20 text-amber-400';
+                iconContainer.className = 'w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center';
+                label.textContent = 'ELEVATED // CAUTION';
+                icon.setAttribute('data-lucide', 'alert-triangle');
+            } else if (data.probability_percent < 80) {
+                circle.style.stroke = '#f97316';
+                banner.className = 'p-3.5 rounded-xl border flex items-center justify-between transition-all duration-300 bg-orange-500/10 border-orange-500/20 text-orange-400';
+                iconContainer.className = 'w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center';
+                label.textContent = 'HIGH RISK // ALERT';
+                icon.setAttribute('data-lucide', 'alert-octagon');
+            } else {
+                circle.style.stroke = '#f43f5e';
+                banner.className = 'p-3.5 rounded-xl border flex items-center justify-between transition-all duration-300 bg-rose-500/15 border-rose-500/30 text-rose-400 animate-pulse';
+                iconContainer.className = 'w-8 h-8 rounded-lg bg-rose-500/20 flex items-center justify-center';
+                label.textContent = 'CRITICAL // EVACUATE';
+                icon.setAttribute('data-lucide', 'alert-octagon');
+            }
+            lucide.createIcons();
+
+            // Threat Factors
+            if (data.threat_factors) {
+                const tf = data.threat_factors;
+                setFactor('Rain', tf["Precipitation Surge"]);
+                setFactor('Soil', tf["Pore Water Saturation"]);
+                setFactor('Slope', tf["Slope Shear Stress"]);
+                setFactor('Vib', tf["Seismic Dynamic Load"]);
+            }
+
+            // Append to Chart
+            const timeStr = data.timestamp || new Date().toLocaleTimeString();
+            appendChartData(timeStr, data.rainfall, state.soil_moisture, data.probability_percent);
+        }
+
+        function setFactor(key, val) {
+            const rounded = Math.round(val || 0);
+            const lbl = document.getElementById('factor' + key + 'Val');
+            const bar = document.getElementById('factor' + key + 'Bar');
+            if (lbl) lbl.textContent = rounded + '%';
+            if (bar) bar.style.width = Math.min(100, rounded) + '%';
+        }
+
+        // ================= MOUNTAIN CROSS-SECTION CANVAS =================
+        const canvas = document.getElementById('slopeCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = canvas.clientWidth * window.devicePixelRatio || 600;
+            canvas.height = canvas.clientHeight * window.devicePixelRatio || 300;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        let rainParticles = [];
+        for (let i = 0; i < 40; i++) {
+            rainParticles.push({
+                x: Math.random() * 600,
+                y: Math.random() * 300,
+                speed: 3 + Math.random() * 4,
+                len: 8 + Math.random() * 10
+            });
+        }
+
+        function drawSlopeSimulation() {
+            const w = canvas.width;
+            const h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+
+            const slope = state.slope_angle;
+            const moisture = state.soil_moisture;
+            const vib = state.vibration;
+            const prob = state.probability;
+
+            document.getElementById('canvasSlopeAngle').textContent = slope.toFixed(1) + '°';
+            document.getElementById('canvasVibVal').textContent = vib.toFixed(3) + 'g';
+
+            // Background
+            const skyGrad = ctx.createLinearGradient(0, 0, 0, h);
+            skyGrad.addColorStop(0, '#0a101d');
+            skyGrad.addColorStop(1, '#0e1726');
+            ctx.fillStyle = skyGrad;
+            ctx.fillRect(0, 0, w, h);
+
+            // Mountain coordinates
+            const slopeRad = (slope * Math.PI) / 180;
+            const peakX = w * 0.15;
+            const peakY = h * 0.25;
+            const toeX = w * 0.90;
+            const drop = Math.tan(slopeRad) * (toeX - peakX);
+            const toeY = Math.min(h * 0.85, peakY + drop * 0.55);
+
+            // Mountain body
+            ctx.beginPath();
+            ctx.moveTo(0, h);
+            ctx.lineTo(0, peakY + 20);
+            ctx.lineTo(peakX, peakY);
+            ctx.lineTo(toeX, toeY);
+            ctx.lineTo(w, toeY + 10);
+            ctx.lineTo(w, h);
+            ctx.closePath();
+
+            const mountainGrad = ctx.createLinearGradient(0, peakY, 0, h);
+            mountainGrad.addColorStop(0, '#1e293b');
+            mountainGrad.addColorStop(0.5, '#0f172a');
+            mountainGrad.addColorStop(1, '#090d16');
+            ctx.fillStyle = mountainGrad;
+            ctx.fill();
+
+            // Slope Surface Line
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = prob > 70 ? '#f43f5e' : (prob > 40 ? '#f59e0b' : '#38bdf8');
+            ctx.stroke();
+
+            // Water Table Level
+            const waterHeight = (moisture / 100) * (h - peakY) * 0.65;
+            const waterLevelY = h - waterHeight;
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(0, h);
+            ctx.lineTo(0, peakY + 20);
+            ctx.lineTo(peakX, peakY);
+            ctx.lineTo(toeX, toeY);
+            ctx.lineTo(w, toeY + 10);
+            ctx.lineTo(w, h);
+            ctx.closePath();
+            ctx.clip();
+
+            ctx.fillStyle = 'rgba(14, 165, 233, 0.22)';
+            ctx.fillRect(0, waterLevelY, w, h - waterLevelY);
+
+            ctx.beginPath();
+            ctx.moveTo(0, waterLevelY);
+            for (let x = 0; x <= w; x += 30) {
+                const wy = waterLevelY + Math.sin(x * 0.05 + Date.now() * 0.003) * 2;
+                ctx.lineTo(x, wy);
+            }
+            ctx.strokeStyle = 'rgba(56, 189, 248, 0.6)';
+            ctx.lineWidth = 1.5;
+            ctx.setLineDash([4, 4]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.restore();
+
+            // Mohr-Coulomb Failure Slip Arc
+            if (prob > 35) {
+                ctx.save();
+                ctx.beginPath();
+                const arcCenterX = (peakX + toeX) * 0.52;
+                const arcCenterY = (peakY + toeY) * 0.55;
+                const arcRadius = (toeX - peakX) * 0.42;
+
+                ctx.arc(arcCenterX, arcCenterY, arcRadius, Math.PI * 0.8, Math.PI * 1.6, false);
+                ctx.strokeStyle = prob > 75 ? 'rgba(244, 63, 94, 0.85)' : 'rgba(245, 158, 11, 0.7)';
+                ctx.lineWidth = 2.5;
+                ctx.setLineDash([6, 3]);
+                ctx.stroke();
+                ctx.restore();
+            }
+
+            // Rain drops
+            if (state.rainfall > 5) {
+                ctx.strokeStyle = 'rgba(186, 230, 253, 0.5)';
+                ctx.lineWidth = 1.2;
+                const rainIntensity = Math.min(50, state.rainfall * 0.35);
+
+                for (let i = 0; i < rainIntensity; i++) {
+                    const p = rainParticles[i % rainParticles.length];
+                    p.y += p.speed * (state.rainfall / 40);
+                    if (p.y > h) { p.y = 0; p.x = Math.random() * w; }
+
+                    ctx.beginPath();
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(p.x - 2, p.y + p.len);
+                    ctx.stroke();
+                }
+            }
+
+            // Ground Tremor Wave at Bottom
+            ctx.beginPath();
+            const vibBaseY = h - 14;
+            const vibAmp = Math.min(16, vib * 32);
+            ctx.moveTo(0, vibBaseY);
+            for (let x = 0; x < w; x += 4) {
+                const vy = vibBaseY + Math.sin(x * 0.08 + Date.now() * 0.015) * vibAmp * Math.sin(x * 0.02);
+                ctx.lineTo(x, vy);
+            }
+            ctx.strokeStyle = vib > 0.2 ? '#f43f5e' : (vib > 0.08 ? '#f59e0b' : '#38bdf8');
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            requestAnimationFrame(drawSlopeSimulation);
+        }
+        requestAnimationFrame(drawSlopeSimulation);
+
+        // ================= CHART.JS TIMELINE =================
+        const chartCtx = document.getElementById('timelineChart').getContext('2d');
+        const timelineChart = new Chart(chartCtx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [
+                    {
+                        label: 'Rainfall (mm/hr)',
+                        data: [],
+                        borderColor: '#38bdf8',
+                        backgroundColor: 'rgba(56, 189, 248, 0.06)',
+                        borderWidth: 2,
+                        tension: 0.35,
+                        pointRadius: 2,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: 'Soil Saturation (%)',
+                        data: [],
+                        borderColor: '#06b6d4',
+                        backgroundColor: 'transparent',
+                        borderWidth: 2,
+                        tension: 0.35,
+                        pointRadius: 2,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: 'Failure Risk (%)',
+                        data: [],
+                        borderColor: '#f43f5e',
+                        backgroundColor: 'rgba(244, 63, 94, 0.10)',
+                        fill: true,
+                        borderWidth: 2.5,
+                        tension: 0.35,
+                        pointRadius: 3,
+                        yAxisID: 'yRisk'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: { duration: 300 },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { color: '#94a3b8', font: { family: 'Plus Jakarta Sans', size: 11, weight: '500' } }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(255, 255, 255, 0.03)' },
+                        ticks: { color: '#64748b', font: { family: 'JetBrains Mono', size: 10 } }
+                    },
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        beginAtZero: true,
+                        max: 220,
+                        grid: { color: 'rgba(255, 255, 255, 0.03)' },
+                        ticks: { color: '#64748b', font: { family: 'JetBrains Mono', size: 10 } }
+                    },
+                    yRisk: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        beginAtZero: true,
+                        max: 100,
+                        grid: { drawOnChartArea: false },
+                        ticks: {
+                            color: '#f43f5e',
+                            font: { family: 'JetBrains Mono', size: 10 },
+                            callback: v => v + '%'
+                        }
+                    }
+                }
+            }
+        });
+
+        function appendChartData(timeStr, rain, soil, risk) {
+            timelineChart.data.labels.push(timeStr);
+            timelineChart.data.datasets[0].data.push(rain);
+            timelineChart.data.datasets[1].data.push(soil);
+            timelineChart.data.datasets[2].data.push(risk);
+
+            if (timelineChart.data.labels.length > 25) {
+                timelineChart.data.labels.shift();
+                timelineChart.data.datasets.forEach(ds => ds.data.shift());
+            }
+            timelineChart.update();
+        }
+
+        // ================= HIGH-FREQUENCY REAL-TIME SYNC =================
+        let lastKnownPacketId = 0;
+        async function syncTelemetry() {
+            try {
+                const res = await fetch(`${API_BASE}/latest`);
+                if (res.ok) {
+                    const latest = await res.json();
+                    const newPacketId = latest.packet_id || 0;
+                    if (newPacketId !== lastKnownPacketId) {
+                        lastKnownPacketId = newPacketId;
+                        renderDashboard(latest);
+                        document.getElementById('clockLocal').textContent = latest.timestamp || new Date().toLocaleTimeString();
+                    }
+                }
+            } catch (e) {}
+        }
+
+        setInterval(syncTelemetry, 450);
+        syncTelemetry();
+    </script>
+</body>
+</html>
